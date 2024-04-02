@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class MyTextField extends StatelessWidget {
+class MyTextField extends StatefulWidget {
   final String hintText;
   final bool obscuredText;
   final controller;
@@ -12,14 +12,19 @@ class MyTextField extends StatelessWidget {
       this.controller});
 
   @override
+  State<MyTextField> createState() => _MyTextFieldState();
+}
+
+class _MyTextFieldState extends State<MyTextField> {
+  @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(20.0),
       child: TextField(
-        controller: controller,
+        controller: widget.controller,
         autofocus: true,
         decoration: InputDecoration(
-          hintText: hintText,
+          hintText: widget.hintText,
           enabledBorder: OutlineInputBorder(
             borderSide: BorderSide(color: Colors.grey.shade600),
           ),
