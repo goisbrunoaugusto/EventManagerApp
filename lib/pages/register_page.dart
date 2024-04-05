@@ -1,11 +1,13 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:multi_dropdown/multiselect_dropdown.dart';
 import 'package:projeto_eventos/components/my_alert_dialog.dart';
 import 'package:projeto_eventos/components/my_button.dart';
 import 'package:projeto_eventos/model/user_model.dart';
 import '../components/my_textfield.dart';
 import 'package:http/http.dart' as http;
+import 'package:projeto_eventos/components/my_multi_selection_box.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -14,9 +16,8 @@ class RegisterPage extends StatefulWidget {
   State<RegisterPage> createState() => _RegisterPageState();
 }
 
-Future<UserModel> registerUserJson(String name, String password, String email,
+Future<UserModel?> registerUserJson(String name, String password, String email,
     List roles, String phone, String cpf, BuildContext context) async {
-  print("Entrou no registerUserJson");
   var url = Uri.parse("http://10.0.2.2:8080/auth/signup");
   var response = await http.post(url,
       headers: <String, String>{"Content-Type": "application/json"},
@@ -24,7 +25,7 @@ Future<UserModel> registerUserJson(String name, String password, String email,
         "username": name,
         "password": password,
         "email": email,
-        "cpf": cpf ?? "",
+        "cpf": cpf,
         "phone": phone ?? "",
         "roles": roles,
       }));
@@ -35,12 +36,34 @@ Future<UserModel> registerUserJson(String name, String password, String email,
         barrierDismissible: true,
         builder: (BuildContext context) {
           return MyAlertDialog(
-              title: 'Backend Response', content: response.body);
+            title: 'Sucesso!',
+            content: "Registro realizado com sucesso!",
+            actions: <Widget>[
+              TextButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/');
+                  },
+                  child: const Text("Ok"))
+            ],
+          );
         });
   } else {
-    throw Error;
+    showDialog(
+        context: context,
+        barrierDismissible: true,
+        builder: (BuildContext context) {
+          return MyAlertDialog(
+              title: 'Ops!',
+              content: "Nao foi possivel realizar seu registro.",
+              actions: <Widget>[
+                TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: const Text("Ok"))
+              ]);
+        });
   }
-  return responseJson;
 }
 
 class _RegisterPageState extends State<RegisterPage> {
@@ -51,15 +74,21 @@ class _RegisterPageState extends State<RegisterPage> {
   final addressController = TextEditingController();
   final cpfController = TextEditingController();
   final roleController = TextEditingController();
+  final List<String> roles = [""];
+  final multiSelectionBoxController = MultiSelectController();
 
   void registerUser() {
-    List<String> roles = [roleController.text];
-    print("Entrou no registerUser");
+    List<dynamic> roles = multiSelectionBoxController.selectedOptions;
+    List roles2 = [];
+    roles.forEach((element) {
+      roles2.add(element.value);
+    });
+
     registerUserJson(
         usernameController.text,
         passwordController.text,
         emailController.text,
-        roles,
+        roles2,
         phoneController.text,
         cpfController.text,
         context);
@@ -105,10 +134,22 @@ class _RegisterPageState extends State<RegisterPage> {
                 obscuredText: false,
                 controller: cpfController,
               ),
-              MyTextField(
-                hintText: 'Digite sua role',
-                obscuredText: false,
-                controller: roleController,
+              const SizedBox(
+                height: 25,
+              ),
+              MyMultiSelectionBox(
+                  controller: multiSelectionBoxController,
+                  items: const <String, String>{
+                    'Usuario': 'ROLE_USER',
+                    'Organizador': 'ROLE_ORGANIZER'
+                  }),
+              // MyTextField(
+              //   hintText: 'Digite sua role',
+              //   obscuredText: false,
+              //   controller: roleController,
+              // ),
+              const SizedBox(
+                height: 50,
               ),
               MyButton(buttonText: 'Register', buttonFunction: registerUser),
             ]),

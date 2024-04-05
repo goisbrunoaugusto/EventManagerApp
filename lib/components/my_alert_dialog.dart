@@ -1,21 +1,22 @@
 import 'package:flutter/material.dart';
 
 class MyAlertDialog extends StatelessWidget {
-  var title;
-  var content;
-  final List<Widget> actions;
-
-  MyAlertDialog({
-    this.title,
-    this.content,
+  const MyAlertDialog({
+    super.key,
+    required this.title,
+    required this.content,
     this.actions = const [],
   });
+
+  final String title;
+  final dynamic content;
+  final List<Widget> actions;
 
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
       title: Text(
-        this.title,
+        title,
       ),
       actions: actions,
       content: Text(

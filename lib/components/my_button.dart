@@ -4,7 +4,7 @@ class MyButton extends StatelessWidget {
   const MyButton(
       {super.key, required this.buttonText, required this.buttonFunction});
 
-  final Function buttonFunction;
+  final dynamic buttonFunction;
   final String buttonText;
 
   @override
