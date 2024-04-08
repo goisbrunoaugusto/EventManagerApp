@@ -1,14 +1,14 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:projeto_eventos/components/my_alert_dialog.dart';
 import 'package:projeto_eventos/model/user_model.dart';
-import 'package:projeto_eventos/pages/home_page.dart';
-import 'package:projeto_eventos/pages/register_page.dart';
 import 'package:projeto_eventos/components/my_textfield.dart';
 import 'package:projeto_eventos/components/my_button.dart';
-import "package:projeto_eventos/service/navigation.dart";
+import 'package:projeto_eventos/pages/home_page.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -23,7 +23,7 @@ class _LoginPageState extends State<LoginPage> {
   final passwordController = TextEditingController();
   final usernameController = TextEditingController();
 
-  Future<UserRequestModel> loginUserJson(
+  Future<UserRequestModel?> loginUserJson(
       String username, String password) async {
     var url = Uri.parse("http://10.0.2.2:8080/auth/login");
     var response = await http.post(url,
@@ -32,9 +32,11 @@ class _LoginPageState extends State<LoginPage> {
           "username": username,
           "password": password,
         }));
-    final reponseJson = jsonDecode(response.body);
     if (response.statusCode == 200) {
-      Navigator.pushNamed(context, '/');
+      final data = jsonDecode(response.body);
+      final token = data['token'];
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context) => HomePage(token: token)));
     } else {
       showDialog(
           context: context,
@@ -44,7 +46,6 @@ class _LoginPageState extends State<LoginPage> {
                 title: 'Backend Response', content: response.body);
           });
     }
-    return reponseJson;
   }
 
   void navigateRegister() async {

@@ -29,25 +29,6 @@ class UserModel {
     };
   }
 
-  // factory UserModel.fromJson(Map<String, dynamic> json) {
-  //   return switch (json) {
-  //     {
-  //       'id': int id,
-  //       'username': String username,
-  //       'email': String email,
-  //       'cpf': String cpf,
-  //       'phone': String phone,
-  //       'roles': List roles,
-  //     } =>
-  //       UserModel(
-  //         username: username,
-  //         id: id,
-  //         title: title,
-  //       ),
-  //     _ => throw const FormatException('Failed to load album.'),
-  //   };
-  // }
-
   factory UserModel.fromJson(Map<String, dynamic> map) {
     return UserModel(
       id: map["id"]?.toInt(),
@@ -84,6 +65,6 @@ class UserRequestModel {
   }
 
   String? getToken() {
-    return this.token;
+    return token;
   }
 }

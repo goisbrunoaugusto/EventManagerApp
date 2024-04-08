@@ -23,6 +23,7 @@ class _MyTextFieldState extends State<MyTextField> {
       child: TextField(
         controller: widget.controller,
         autofocus: true,
+        obscureText: widget.obscuredText,
         decoration: InputDecoration(
           hintText: widget.hintText,
           enabledBorder: OutlineInputBorder(
