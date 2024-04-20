@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:projeto_eventos/components/my_event_tile.dart';
 import 'package:projeto_eventos/model/sport_event_model.dart';
 import 'package:http/http.dart' as http;
 
@@ -24,7 +25,6 @@ class _HomePageState extends State<HomePage> {
           'Authorization': "Bearer ${widget.token}",
         });
     if (response.statusCode == 200) {
-      print("----------------------------- ENTROU NO RESPONSE 200");
       List<dynamic> responseJson = jsonDecode(response.body);
       setState(() {
         sportEventList = responseJson;
@@ -43,15 +43,63 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color.fromRGBO(58, 66, 86, 1.0),
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        elevation: 0.1,
+        backgroundColor: const Color.fromRGBO(58, 66, 86, 1.0),
+        title: const Center(
+            child: Text(
+          'Eventos',
+          style: TextStyle(color: Colors.white),
+        )),
+        actions: <Widget>[
+          IconButton(
+            icon: const Icon(
+              Icons.list,
+              color: Colors.white,
+            ),
+            onPressed: () {},
+          )
+        ],
+      ),
       body: SafeArea(
-        child: Column(
-          children: [
-            OutlinedButton(
-                onPressed: () {
-                  print("------------------------ ${sportEventList}");
-                },
-                child: Text('Botao pra printar')),
-          ],
+        child: GridView.builder(
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2, crossAxisSpacing: 8, mainAxisSpacing: 8),
+            itemCount: sportEventList.length,
+            padding: const EdgeInsets.all(8),
+            itemBuilder: (BuildContext context, int index) {
+              return EventTile(
+                  title: sportEventList[index]['name'],
+                  description: sportEventList[index]['description']);
+            }),
+      ),
+      bottomNavigationBar: SizedBox(
+        height: 55.0,
+        child: BottomAppBar(
+          color: const Color.fromRGBO(58, 66, 86, 1.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              IconButton(
+                icon: const Icon(Icons.home, color: Colors.white),
+                onPressed: () {},
+              ),
+              IconButton(
+                icon: const Icon(Icons.add_box, color: Colors.white),
+                onPressed: () {},
+              ),
+              IconButton(
+                icon: const Icon(Icons.hotel, color: Colors.white),
+                onPressed: () {},
+              ),
+              IconButton(
+                icon: const Icon(Icons.account_box, color: Colors.white),
+                onPressed: () {},
+              )
+            ],
+          ),
         ),
       ),
     );
