@@ -43,7 +43,7 @@ class _LoginPageState extends State<LoginPage> {
           barrierDismissible: true,
           builder: (BuildContext context) {
             return MyAlertDialog(
-                title: 'Backend Response', content: response.body);
+                title: 'Erro ao realizar login.', content: response.body);
           });
     }
   }

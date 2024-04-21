@@ -33,37 +33,40 @@ Future<UserModel?> registerUserJson(String name, String password, String email,
       }));
   if (response.statusCode == 200) {
     showDialog(
-        context: context,
-        barrierDismissible: true,
-        builder: (BuildContext context) {
-          return MyAlertDialog(
-            title: 'Sucesso!',
-            content: "Registro realizado com sucesso!",
-            actions: <Widget>[
-              TextButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/');
-                  },
-                  child: const Text("Ok"))
-            ],
-          );
-        });
+      context: context,
+      barrierDismissible: true,
+      builder: (BuildContext context) {
+        return MyAlertDialog(
+          title: 'Sucesso!',
+          content: "Registro realizado com sucesso!",
+          actions: <Widget>[
+            TextButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, '/');
+                },
+                child: const Text("Ok"))
+          ],
+        );
+      },
+    );
   } else {
     showDialog(
-        context: context,
-        barrierDismissible: true,
-        builder: (BuildContext context) {
-          return MyAlertDialog(
-              title: 'Ops!',
-              content: "Nao foi possivel realizar seu registro.",
-              actions: <Widget>[
-                TextButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    child: const Text("Ok"))
-              ]);
-        });
+      context: context,
+      barrierDismissible: true,
+      builder: (BuildContext context) {
+        return MyAlertDialog(
+          title: 'Ops!',
+          content: "Nao foi possivel realizar seu registro.",
+          actions: <Widget>[
+            TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: const Text("Ok"))
+          ],
+        );
+      },
+    );
   }
 }
 

@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 
-class EventTile extends StatelessWidget {
+class MyEventTile extends StatelessWidget {
   final String title;
   final String description;
 
-  const EventTile({super.key, required this.title, required this.description});
+  const MyEventTile(
+      {super.key, required this.title, required this.description});
 
   @override
   Widget build(BuildContext context) {
