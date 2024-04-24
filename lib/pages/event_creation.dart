@@ -2,10 +2,12 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:projeto_eventos/components/my_alert_dialog.dart';
 import 'package:projeto_eventos/components/my_button.dart';
+import 'package:projeto_eventos/components/my_date_field.dart';
 import 'package:projeto_eventos/components/my_multiline_text_field.dart';
 import 'package:projeto_eventos/components/my_textfield.dart';
 import 'package:projeto_eventos/model/sport_event_model.dart';
 import 'package:http/http.dart' as http;
+import 'package:projeto_eventos/pages/home_page.dart';
 
 class EventCreation extends StatefulWidget {
   final String token;
@@ -51,7 +53,7 @@ class _EventCreationState extends State<EventCreation> {
           "ticketPrice": ticketPrice,
           "sport_id": sportId
         }));
-    if (response.statusCode == 200) {
+    if (response.statusCode == 201) {
       showDialog(
         context: context,
         barrierDismissible: true,
@@ -62,7 +64,11 @@ class _EventCreationState extends State<EventCreation> {
             actions: <Widget>[
               TextButton(
                   onPressed: () {
-                    Navigator.pop(context);
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                HomePage(token: widget.token)));
                   },
                   child: const Text("Ok"))
             ],
@@ -94,7 +100,8 @@ class _EventCreationState extends State<EventCreation> {
     double doubleTicketPrice = double.parse(ticketPriceController.text);
     double doubleTicketQuantity = double.parse(ticketQuantityController.text);
     int intsportId = int.parse(sportController.text);
-
+    print(
+        '------------------------------------------- ${eventDateController.text}');
     registerEventJson(
         nameController.text,
         eventDateController.text,
@@ -137,9 +144,8 @@ class _EventCreationState extends State<EventCreation> {
                   obscuredText: false,
                   controller: nameController,
                 ),
-                MyTextField(
+                MyDateField(
                   hintText: 'Digite a data do evento',
-                  obscuredText: false,
                   controller: eventDateController,
                 ),
                 MyTextField(

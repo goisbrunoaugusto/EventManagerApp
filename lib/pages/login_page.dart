@@ -59,7 +59,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey.shade200,
+      backgroundColor: const Color.fromRGBO(58, 66, 86, 1.0),
       body: SafeArea(
         child: Center(
           child: Column(
@@ -68,6 +68,7 @@ class _LoginPageState extends State<LoginPage> {
               const Icon(
                 Icons.lock,
                 size: 100,
+                color: Colors.white,
               ),
               const SizedBox(
                 height: 50,
