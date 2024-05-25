@@ -20,15 +20,10 @@ class EventCreation extends StatefulWidget {
 
 class _EventCreationState extends State<EventCreation> {
   final nameController = TextEditingController();
-
   final eventDateController = TextEditingController();
-
   final descriptionController = TextEditingController();
-
   final ticketQuantityController = TextEditingController();
-
   final ticketPriceController = TextEditingController();
-
   final sportController = TextEditingController();
 
   Future<SportEventModel?> registerEventJson(

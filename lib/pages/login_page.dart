@@ -10,6 +10,8 @@ import 'package:projeto_eventos/components/my_textfield.dart';
 import 'package:projeto_eventos/components/my_button.dart';
 import 'package:projeto_eventos/pages/home_page.dart';
 
+import '../model/user_request_model.dart';
+
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 

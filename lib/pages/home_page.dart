@@ -27,7 +27,7 @@ class _HomePageState extends State<HomePage> {
           'Authorization': "Bearer ${widget.token}",
         });
     if (response.statusCode == 200) {
-      List<dynamic> responseJson = jsonDecode(response.body);
+      List<dynamic> responseJson = json.decode(response.body);
       setState(() {
         sportEventList = responseJson;
       });
@@ -83,6 +83,7 @@ class _HomePageState extends State<HomePage> {
                       MaterialPageRoute(
                           builder: (context) => EventPage(
                                 token: widget.token,
+                                eventID: sportEventList[index]['id'],
                                 name: sportEventList[index]['name'],
                                 description: sportEventList[index]
                                     ['description'],

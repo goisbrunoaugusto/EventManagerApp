@@ -4,6 +4,7 @@ import 'package:projeto_eventos/utils/endpoints.dart';
 import 'package:http/http.dart' as http;
 import 'package:projeto_eventos/utils/base_api.dart';
 
+/*
 class UserService extends BaseAPI {
   Future<http.Response> getToken(String username, String password) async {
     String body = jsonEncode({
@@ -30,3 +31,4 @@ class UserService extends BaseAPI {
     return response;
   }
 }
+*/
